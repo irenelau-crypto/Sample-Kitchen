@@ -7,7 +7,10 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "db:generate": "prisma generate",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "check:imports": "node --experimental-strip-types scripts/check-imports.mjs",
+    "check:plan": "node --experimental-strip-types scripts/check-plan.mjs",
+    "check:agents": "node --experimental-strip-types scripts/check-agents.mjs"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
