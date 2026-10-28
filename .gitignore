@@ -1,0 +1,23 @@
+node_modules/
+.pnpm-store/
+.next/
+.vercel/
+out/
+dist/
+coverage/
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+
+# Operational examples are inputs to be uploaded through the deployed app.
+operating-data/
+current_inventory.json
+HR_*.json
+CRM_Weekly_Sales_Orders_*.csv
+/scenario.json
+/products_and_recipes.json
+/supplier.json
+Kitchen_Planner_Learner_Brief.md
+PROJECT AGENTS/
+.DS_Store

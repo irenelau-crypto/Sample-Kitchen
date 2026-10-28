@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ImportKind {
+  STOCK
+  STAFF
+  LEAVE
+  AVAILABILITY
+  CRM
+}
+
+model ReferenceData {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+model ImportBatch {
+  id             String     @id @default(cuid())
+  kind           ImportKind
+  exportId       String?
+  idempotencyKey String
+  sourceName     String
+  sourceSystem   String?
+  sourceTimestamp DateTime?
+  rowCount       Int
+  importedAt     DateTime   @default(now())
+  contentHash    String
+  payload        Json
+
+  @@unique([kind, idempotencyKey])
+  @@index([kind, importedAt])
+  @@index([exportId])
+}
+
+model AgentRun {
+  id             String   @id @default(cuid())
+  createdAt      DateTime @default(now())
+  model          String
+  importVersion  Json
+  recommendations Json
+  handoffTrace   Json
+
+  @@index([createdAt])
+}
+
+enum DraftStatus {
+  PENDING
+  CREATED
+}
+
+model DraftAction {
+  id          String      @id @default(cuid())
+  agentRunId  String      @unique
+  status      DraftStatus @default(PENDING)
+  recipient   String
+  subject     String
+  toolName    String?
+  createdAt   DateTime    @default(now())
+  completedAt DateTime?
+}
